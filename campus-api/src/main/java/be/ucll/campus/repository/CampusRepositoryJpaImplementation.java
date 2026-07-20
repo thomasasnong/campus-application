@@ -25,8 +25,8 @@ public class CampusRepositoryJpaImplementation implements CampusRepository {
     }
 
     @Override
-    public Optional<Campus> findCampusByName(String name) {
-        return campusJpaRepository.findById(name);
+    public Optional<Campus> findCampusByName(String campusName) {
+        return campusJpaRepository.findById(campusName);
     }
 
     @Override

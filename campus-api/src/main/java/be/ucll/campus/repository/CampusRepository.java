@@ -9,7 +9,7 @@ public interface CampusRepository {
 
     List<Campus> getCampuses();
 
-    Optional<Campus> findCampusByName(String name);
+    Optional<Campus> findCampusByName(String campusName);
 
     Campus saveCampus(Campus campus);
 

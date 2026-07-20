@@ -27,6 +27,11 @@ public class Campus {
         this.numberOfParkingSpaces = numberOfParkingSpaces;
     }
 
+    public void updateAddressAndParkingSpaces(String address, int numberOfParkingSpaces) {
+        this.address = address;
+        this.numberOfParkingSpaces = numberOfParkingSpaces;
+    }
+
     public String getName() {
         return name;
     }
