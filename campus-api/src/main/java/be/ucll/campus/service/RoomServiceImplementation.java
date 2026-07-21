@@ -96,7 +96,7 @@ public class RoomServiceImplementation implements RoomService {
     }
 
     private void validateRoom(Room room) {
-        if (room == null || room.getName() == null || room.getName().isBlank()) {
+        if (room.getName() == null || room.getName().isBlank()) {
             throw new RoomNeedsANameException("Room name is null or blank");
         }
 

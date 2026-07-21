@@ -67,7 +67,7 @@ public class CampusServiceImplementation implements CampusService {
     }
 
     private void validateCampusDetails(Campus campus) {
-        if (campus == null || campus.getAddress() == null || campus.getAddress().isBlank()) {
+        if (campus.getAddress() == null || campus.getAddress().isBlank()) {
             throw new CampusNeedsAnAddressException("Campus address is null or blank");
         }
 
@@ -77,10 +77,6 @@ public class CampusServiceImplementation implements CampusService {
     }
 
     private void validateCampusForCreation(Campus campus) {
-        if (campus == null) {
-            throw new CampusNeedsANameException("Campus name is null or blank");
-        }
-
         validateName(campus.getName());
         validateCampusDetails(campus);
     }
