@@ -65,7 +65,7 @@ public class RoomServiceImplementation implements RoomService {
                     throw new RoomNeedsToBeUniqueException("Room with name " + room.getName() + " already exists on campus " + campusName);
                 });
 
-        originalRoom.updateDetails(room.getName(), room.getRoomType(), room.getNumberOfSeats(), room.getNumberOfSeats());
+        originalRoom.updateDetails(room.getName(), room.getRoomType(), room.getNumberOfSeats(), room.getFloor());
 
         return roomRepository.saveRoom(originalRoom);
     }
@@ -101,7 +101,7 @@ public class RoomServiceImplementation implements RoomService {
         }
 
         if (room.getRoomType() == null || room.getRoomType().isBlank()) {
-            throw new RoomNeedsANameException("Room type is null or blank");
+            throw new RoomNeedsATypeException("Room type is null or blank");
         }
 
         if(room.getNumberOfSeats() < 0) {
