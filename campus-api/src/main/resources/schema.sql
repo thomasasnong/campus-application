@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS room;
+DROP TABLE IF EXISTS app_user;
 DROP TABLE IF EXISTS campus;
 
 CREATE TABLE campus
@@ -6,6 +7,15 @@ CREATE TABLE campus
     name VARCHAR(255) PRIMARY KEY,
     address VARCHAR(255) NOT NULL,
     number_of_parking_spaces INT NOT NULL
+);
+
+CREATE TABLE app_user
+(
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    last_name VARCHAR(255) NOT NULL,
+    first_name VARCHAR(255) NOT NULL,
+    birth_date DATE NOT NULL,
+    email VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE room
