@@ -1,9 +1,9 @@
 package be.ucll.campus.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "campus")
@@ -19,6 +19,9 @@ public class Campus {
     @Column(name = "number_of_parking_spaces")
     private int numberOfParkingSpaces;
 
+    @OneToMany(mappedBy = "campus", cascade = CascadeType.ALL)
+    private List<Room> rooms = new ArrayList<>();
+
     protected Campus() {}
 
     public Campus(String name, String address, int numberOfParkingSpaces) {
@@ -27,7 +30,7 @@ public class Campus {
         this.numberOfParkingSpaces = numberOfParkingSpaces;
     }
 
-    public void updateAddressAndParkingSpaces(String address, int numberOfParkingSpaces) {
+    public void updateDetails(String address, int numberOfParkingSpaces) {
         this.address = address;
         this.numberOfParkingSpaces = numberOfParkingSpaces;
     }
@@ -42,5 +45,9 @@ public class Campus {
 
     public int getNumberOfParkingSpaces() {
         return numberOfParkingSpaces;
+    }
+
+    public int getNumberOfRooms() {
+        return rooms.size();
     }
 }

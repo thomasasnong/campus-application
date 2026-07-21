@@ -28,7 +28,7 @@ public class CampusApiIntegrationTest {
     }
 
     @Test
-    public void givenNoCampusTestCampus4_WhenInvokingPostCampus_ThenCampusIsSaved() {
+    public void givenNoCampusNamedTestCampus4_WhenInvokingPostCampus_ThenCampusIsSaved() {
         webTestClient.post()
                 .uri("/campus")
                 .header("Content-Type", "application/json")

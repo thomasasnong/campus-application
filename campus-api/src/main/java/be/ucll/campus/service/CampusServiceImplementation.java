@@ -48,7 +48,7 @@ public class CampusServiceImplementation implements CampusService {
 
         validateCampusDetails(campus);
 
-        originalCampus.updateAddressAndParkingSpaces(campus.getAddress(),campus.getNumberOfParkingSpaces());
+        originalCampus.updateDetails(campus.getAddress(),campus.getNumberOfParkingSpaces());
 
         return campusRepository.saveCampus(originalCampus);
     }
