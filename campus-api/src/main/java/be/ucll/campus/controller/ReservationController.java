@@ -25,7 +25,7 @@ public class ReservationController {
         return reservationService.getReservationsByUser(userId);
     }
 
-    @GetMapping(name = "/{reservationId}")
+    @GetMapping("/{reservationId}")
     public Reservation findReservationByIdAndUser(@PathVariable("userId") long userId, @PathVariable("reservationId") long reservationId) {
         return reservationService.findReservationByIdAndUser(userId, reservationId);
     }
