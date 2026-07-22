@@ -1,8 +1,11 @@
 package be.ucll.campus.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "app_user")
@@ -23,6 +26,10 @@ public class User {
 
     @Column(name = "email")
     private String email;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Reservation> reservations = new ArrayList<>();
 
     protected  User() {}
 
@@ -58,5 +65,10 @@ public class User {
         this.firstName = firstName;
         this.birthDate = birthDate;
         this.email = email;
+    }
+
+    public void addReservation(Reservation reservation) {
+        reservations.add(reservation);
+        reservation.setUser(this);
     }
 }
