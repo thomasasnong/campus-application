@@ -10,6 +10,8 @@ public interface RoomRepository {
 
     List<Room> getRoomsByCampus(Campus campus);
 
+    Optional<Room> findRoomById(long roomId);
+
     Optional<Room> findRoomByIdAndCampus(long roomId,  Campus campus);
 
     Optional<Room> findRoomByNameAndCampus(String roomName, Campus campus);

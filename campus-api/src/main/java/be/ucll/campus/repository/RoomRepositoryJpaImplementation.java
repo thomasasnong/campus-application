@@ -25,6 +25,11 @@ public class RoomRepositoryJpaImplementation  implements RoomRepository {
     }
 
     @Override
+    public Optional<Room> findRoomById(long roomId) {
+        return roomJpaRepository.findById(roomId);
+    }
+
+    @Override
     public Optional<Room> findRoomByIdAndCampus(long roomId, Campus campus) {
         return roomJpaRepository.findByIdAndCampus(roomId, campus);
     }
