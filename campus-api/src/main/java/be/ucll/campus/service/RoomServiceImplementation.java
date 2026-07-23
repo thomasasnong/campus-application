@@ -2,12 +2,16 @@ package be.ucll.campus.service;
 
 import be.ucll.campus.error.*;
 import be.ucll.campus.model.Campus;
+import be.ucll.campus.model.Reservation;
 import be.ucll.campus.model.Room;
 import be.ucll.campus.repository.CampusRepository;
+import be.ucll.campus.repository.ReservationRepository;
 import be.ucll.campus.repository.RoomRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,17 +19,40 @@ public class RoomServiceImplementation implements RoomService {
 
     private final RoomRepository roomRepository;
     private final CampusRepository campusRepository;
+    private final ReservationRepository reservationRepository;
 
     @Autowired
-    public RoomServiceImplementation(RoomRepository roomRepository, CampusRepository campusRepository) {
+    public RoomServiceImplementation(RoomRepository roomRepository, CampusRepository campusRepository, ReservationRepository reservationRepository) {
         this.roomRepository = roomRepository;
         this.campusRepository = campusRepository;
+        this.reservationRepository = reservationRepository;
     }
 
     @Override
-    public List<Room> allRoomsByCampus(String campusName) {
+    public List<Room> allRoomsByCampus(String campusName, LocalDateTime availableFrom, LocalDateTime availableUntil, Integer minNumberOfSeats) {
         Campus campus = findCampusByName(campusName);
-        return roomRepository.getRoomsByCampus(campus);
+
+        if (availableFrom != null && availableUntil != null && !availableFrom.isBefore(availableUntil)) {
+            throw new AvailabilityStartMustBeBeforeEndException("Available from must be before available until");
+        }
+
+        List<Room> rooms = roomRepository.getRoomsByCampus(campus);
+
+        List<Room> filteredRooms = new ArrayList<>();
+
+        for (Room room : rooms) {
+            if (minNumberOfSeats != null && room.getNumberOfSeats() < minNumberOfSeats) {
+                continue;
+            }
+
+            if (!isRoomAvailable(room, availableFrom, availableUntil)) {
+                continue;
+            }
+
+            filteredRooms.add(room);
+        }
+
+        return filteredRooms;
     }
 
     @Override
@@ -107,5 +134,39 @@ public class RoomServiceImplementation implements RoomService {
         if(room.getNumberOfSeats() < 0) {
             throw new RoomNeedsValidNumberOfSeatsException("Room number of seats is negative");
         }
+    }
+
+    private boolean isRoomAvailable(Room room, LocalDateTime availableFrom, LocalDateTime availableUntil) {
+        if (availableFrom == null && availableUntil == null) {
+            return true;
+        }
+
+        List<Reservation> reservations = reservationRepository.getReservationsByRoom(room);
+
+        for (Reservation reservation : reservations) {
+            if (availableFrom != null && availableUntil != null) {
+                boolean periodsOverlap = availableFrom.isBefore(reservation.getEndTime()) && availableUntil.isAfter(reservation.getStartTime());
+
+                if (periodsOverlap) {
+                    return false;
+                }
+            } else {
+                LocalDateTime moment;
+
+                if (availableFrom != null) {
+                    moment = availableFrom;
+                } else {
+                    moment = availableUntil;
+                }
+
+                boolean occupiedAtMoment = !moment.isBefore(reservation.getStartTime()) && moment.isBefore(reservation.getEndTime());
+
+                if (occupiedAtMoment) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

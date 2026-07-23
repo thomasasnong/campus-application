@@ -3,11 +3,12 @@ package be.ucll.campus.service;
 import be.ucll.campus.model.Campus;
 import be.ucll.campus.model.Room;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface RoomService {
 
-    List<Room> allRoomsByCampus(String campusName);
+    List<Room> allRoomsByCampus(String campusName, LocalDateTime availableFrom, LocalDateTime availableUntil, Integer minNumberOfSeats);
 
     Room findRoomByIdAndCampus(String campusName, long roomId);
 

@@ -4,9 +4,11 @@ import be.ucll.campus.error.*;
 import be.ucll.campus.model.Room;
 import be.ucll.campus.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -21,8 +23,14 @@ public class RoomController {
     }
 
     @GetMapping
-    public List<Room> getAllRooms(@PathVariable("campusName") String campusName) {
-        return roomService.allRoomsByCampus(campusName);
+    public List<Room> getAllRooms(
+            @PathVariable("campusName") String campusName,
+            @RequestParam(value = "availableFrom", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime availableFrom,
+            @RequestParam(value = "availableUntil", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime availableUntil,
+            @RequestParam(value = "minNumberOfSeats", required = false) Integer minNumberOfSeats)
+    {
+        return roomService.allRoomsByCampus(campusName, availableFrom, availableUntil, minNumberOfSeats
+        );
     }
 
     @GetMapping("/{roomId}")
@@ -87,5 +95,11 @@ public class RoomController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public FieldMessage handleRoomNeedsToBeUniqueException(RoomNeedsToBeUniqueException exception) {
         return new FieldMessage("name", exception.getMessage());
+    }
+
+    @ExceptionHandler(AvailabilityStartMustBeBeforeEndException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public FieldMessage handleAvailabilityStartMustBeBeforeEndException(AvailabilityStartMustBeBeforeEndException exception) {
+        return new FieldMessage("availableFrom", exception.getMessage());
     }
 }
