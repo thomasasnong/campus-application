@@ -1,0 +1,19 @@
+package be.ucll.campus.api.service;
+
+import be.ucll.campus.api.model.Room;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public interface RoomService {
+
+    List<Room> allRoomsByCampus(String campusName, LocalDateTime availableFrom, LocalDateTime availableUntil, Integer minNumberOfSeats);
+
+    Room findRoomByIdAndCampus(String campusName, long roomId);
+
+    Room addRoomToCampus(String campusName, Room room);
+
+    Room updateRoom(String campusName, long roomId, Room room);
+
+    void removeRoom(String campusName, long roomId);
+}
