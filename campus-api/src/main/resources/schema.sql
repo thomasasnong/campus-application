@@ -59,9 +59,11 @@ CREATE TABLE reservation_room
 
     CONSTRAINT fk_reservation_room_reservation
         FOREIGN KEY (reservation_id)
-        REFERENCES reservation(id),
+        REFERENCES reservation(id)
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_reservation_room_room
         FOREIGN KEY (room_id)
         REFERENCES room(id)
+        ON DELETE CASCADE
 );
