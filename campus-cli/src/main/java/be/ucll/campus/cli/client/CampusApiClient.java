@@ -1,6 +1,7 @@
 package be.ucll.campus.cli.client;
 
 import be.ucll.campus.cli.model.Campus;
+import be.ucll.campus.cli.model.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -21,6 +22,16 @@ public class CampusApiClient {
                 .retrieve()
                 .bodyToFlux(Campus.class)
                 .collectList()
+                .block();
+    }
+
+    public User createUser(User user) {
+        return webClient
+                .post()
+                .uri("/user")
+                .bodyValue(user)
+                .retrieve()
+                .bodyToMono(User.class)
                 .block();
     }
 }
