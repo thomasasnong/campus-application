@@ -7,7 +7,6 @@ public class Reservation {
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private String comment;
-    private int capacity;
 
     public Reservation() {}
 
@@ -33,10 +32,6 @@ public class Reservation {
         return comment;
     }
 
-    public int getCapacity() {
-        return capacity;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
@@ -51,9 +46,5 @@ public class Reservation {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 }
