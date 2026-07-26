@@ -110,8 +110,8 @@ public class ReservationServiceImplementation implements ReservationService {
             throw new ReservationStartMustBeBeforeEndException("Reservation start time must be before end time");
         }
 
-        if (endTime.isBefore(LocalDateTime.now())) {
-            throw new ReservationCannotBeInPastException("Reservation end time cannot be in the past");
+        if (startTime.isBefore(LocalDateTime.now())) {
+            throw new ReservationCannotBeInPastException("Reservation start time cannot be in the past");
         }
     }
 

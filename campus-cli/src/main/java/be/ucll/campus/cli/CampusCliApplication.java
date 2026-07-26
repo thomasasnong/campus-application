@@ -231,6 +231,10 @@ public class CampusCliApplication implements CommandLineRunner {
                                 System.out.println("GESELECTEERDE LOKALEN");
                                 System.out.println("---------------------");
 
+                                for (Room room : selectedRooms) {
+                                    System.out.println(room.getCampusName() + " - " + room.getName() + " - " + room.getNumberOfSeats() + " plaatsen");
+                                }
+
                                 System.out.print("Commentaar (optioneel): ");
                                 String comment = scanner.nextLine().trim();
 

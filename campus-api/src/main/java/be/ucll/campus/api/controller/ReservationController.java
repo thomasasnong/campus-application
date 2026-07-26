@@ -91,7 +91,7 @@ public class ReservationController {
     @ExceptionHandler(ReservationCannotBeInPastException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public FieldMessage handleReservationCannotBeInPastException(ReservationCannotBeInPastException exception) {
-        return new FieldMessage("endTime", exception.getMessage());
+        return new FieldMessage("startTime", exception.getMessage());
     }
 
     @ExceptionHandler(RoomAlreadyInReservationException.class)

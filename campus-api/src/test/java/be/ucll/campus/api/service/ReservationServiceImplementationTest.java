@@ -10,8 +10,6 @@ import be.ucll.campus.api.model.User;
 import be.ucll.campus.api.repository.ReservationRepository;
 import be.ucll.campus.api.repository.RoomRepository;
 import be.ucll.campus.api.repository.UserRepository;
-import be.ucll.campus.api.service.ReservationService;
-import be.ucll.campus.api.service.ReservationServiceImplementation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
