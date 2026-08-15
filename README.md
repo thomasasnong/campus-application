@@ -16,3 +16,6 @@ De databaseverbinding wordt lokaal ingesteld via de volgende omgevingsvariabelen
 - `DB_URL`
 - `DB_USERNAME`
 - `DB_PASSWORD`
+
+Bij een nieuwe MySQL-database moet eerst schema.sql worden uitgevoerd.
+Daarna kan eventueel data.sql worden uitgevoerd om de initiële testdata toe te voegen.

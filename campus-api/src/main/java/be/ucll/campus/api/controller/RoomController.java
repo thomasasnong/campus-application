@@ -1,6 +1,7 @@
 package be.ucll.campus.api.controller;
 
 import be.ucll.campus.api.error.*;
+import be.ucll.campus.api.model.Reservation;
 import be.ucll.campus.api.model.Room;
 import be.ucll.campus.api.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +54,11 @@ public class RoomController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void removeRoom(@PathVariable("campusName") String campusName, @PathVariable("roomId") long roomId) {
         roomService.removeRoom(campusName, roomId);
+    }
+
+    @GetMapping("/{roomId}/reservations")
+    public List<Reservation> getReservationsByRoom(@PathVariable("campusName") String campusName, @PathVariable("roomId") long roomId) {
+        return roomService.getReservationsByRoom(campusName, roomId);
     }
 
     @ExceptionHandler(CampusNameDoesNotExistException.class)

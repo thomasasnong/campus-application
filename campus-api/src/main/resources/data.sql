@@ -17,6 +17,9 @@ VALUES ('TestRoomSameName', 'TestType2', 20, 2, 'TestCampus1');
 INSERT INTO room (name, room_type, number_of_seats, floor, campus_name)
 VALUES ('TestRoomSameName', 'TestType1', 30, 1, 'TestCampus2');
 
+INSERT INTO room (name, room_type, number_of_seats, floor, campus_name)
+VALUES ('TestRoom4', 'TestType3', 30, 1, 'TestCampus3');
+
 
 INSERT INTO app_user (last_name, first_name, birth_date, email)
 VALUES ('TestLastName1', 'TestFirstName1', '2001-01-01', 'testuser1@email.com');

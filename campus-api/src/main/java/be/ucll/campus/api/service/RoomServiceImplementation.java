@@ -106,6 +106,13 @@ public class RoomServiceImplementation implements RoomService {
         roomRepository.deleteRoom(room);
     }
 
+    @Override
+    public List<Reservation> getReservationsByRoom(String campusName, long roomId) {
+        Room room = findRoomByIdAndCampus(campusName, roomId);
+
+        return reservationRepository.getReservationsByRoom(room);
+    }
+
     private Campus findCampusByName(String campusName) {
         if (campusName == null || campusName.isBlank()) {
             throw new CampusNeedsANameException("Campus name is null or blank");

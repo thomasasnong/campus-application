@@ -110,6 +110,8 @@ public class ReservationServiceImplementationTest {
         assertThrows(ReservationStartMustBeBeforeEndException.class, () -> {
             reservationService.addReservation(USER_ID, reservation);
         });
+
+        verify(userRepository).findUserById(USER_ID);
     }
 
     @Test
@@ -123,6 +125,8 @@ public class ReservationServiceImplementationTest {
         assertThrows(ReservationCannotBeInPastException.class, () -> {
             reservationService.addReservation(USER_ID, reservation);
         });
+
+        verify(userRepository).findUserById(USER_ID);
     }
 
     @Test
@@ -146,6 +150,8 @@ public class ReservationServiceImplementationTest {
         assertThrows(RoomAlreadyInReservationException.class, () -> {
             reservationService.addRoomToReservation(USER_ID, RESERVATION_ID, ROOM_ID);
         });
+
+        verify(roomRepository).findRoomById(ROOM_ID);
     }
 
     @Test
@@ -178,5 +184,7 @@ public class ReservationServiceImplementationTest {
         assertThrows(RoomNotAvailableException.class, () -> {
             reservationService.addRoomToReservation(USER_ID, RESERVATION_ID, ROOM_ID);
         });
+
+        verify(reservationRepository).getReservationsByRoom(room);
     }
 }

@@ -1,5 +1,6 @@
 package be.ucll.campus.api.service;
 
+import be.ucll.campus.api.model.Reservation;
 import be.ucll.campus.api.model.Room;
 
 import java.time.LocalDateTime;
@@ -16,4 +17,6 @@ public interface RoomService {
     Room updateRoom(String campusName, long roomId, Room room);
 
     void removeRoom(String campusName, long roomId);
+
+    List<Reservation> getReservationsByRoom(String campusName, long roomId);
 }
