@@ -6,6 +6,7 @@ public class Room {
     private String roomType;
     private int numberOfSeats;
     private int floor;
+    // Enkel gebruikt door de CLI om bij te houden bij welke campus het lokaal hoort.
     private String campusName;
 
     public Room() {}

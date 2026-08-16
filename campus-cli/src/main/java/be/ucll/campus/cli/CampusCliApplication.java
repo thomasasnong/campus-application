@@ -18,6 +18,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Command-line frontend voor de Campus application.
+ *
+ * De applicatie gebruikt CampusApiClient om te communiceren met de REST API.
+ * Er is geen directe communicatie met de database.
+ *
+ * CommandLineRunner wordt gebruikt zodat het interactieve menu automatisch start nadat de Spring Boot-applicatiecontext geïnitialiseerd is.
+ */
 @SpringBootApplication
 public class CampusCliApplication implements CommandLineRunner {
 
@@ -162,6 +170,8 @@ public class CampusCliApplication implements CommandLineRunner {
                     }
 
                     try {
+                        // Beschikbaarheid wordt per campus opgevraagd omdat het REST-endpoint aan één campus gekoppeld is.
+                        // De resultaten worden samengevoegd zodat de CLI alle beschikbare lokalen in één lijst kan tonen.
                         List<Campus> campuses = campusApiClient.getCampuses();
 
                         List<Room> availableRooms = new ArrayList<>();
@@ -170,6 +180,8 @@ public class CampusCliApplication implements CommandLineRunner {
                             List<Room> campusRooms = campusApiClient.getAvailableRooms(campus.getName(), availableFrom, availableUntil, minNumberOfSeats);
 
                             for (Room room : campusRooms) {
+                                // De Room-response bevat geen Campus-object.
+                                // De campusnaam wordt lokaal bijgehouden zodat de CLI deze samen met het lokaal kan tonen.
                                 room.setCampusName(campus.getName());
                             }
 
@@ -240,6 +252,8 @@ public class CampusCliApplication implements CommandLineRunner {
 
                                 Reservation reservation = new Reservation(availableFrom, availableUntil, comment);
 
+                                // De API maakt eerst de reservatie zonder lokalen aan.
+                                // Daarna wordt elk geselecteerd lokaal afzonderlijk via een PUT-request toegevoegd.
                                 Reservation createdReservation = campusApiClient.createReservation(userId, reservation);
 
                                 for (Room room : selectedRooms) {
@@ -252,10 +266,12 @@ public class CampusCliApplication implements CommandLineRunner {
                             }
                         }
                     } catch (WebClientResponseException exception) {
+                        // De API werd bereikt, maar antwoordde met een HTTP-fout zoals 400 of 404.
                         System.out.println();
                         System.out.println("De API heeft de aanvraag geweigerd.");
                         System.out.println(exception.getResponseBodyAsString());
                     } catch (WebClientRequestException exception) {
+                        // Het request kon niet uitgevoerd worden, bijvoorbeeld omdat campus-api niet actief is.
                         System.out.println();
                         System.out.println("De Campus API is niet bereikbaar, controleer of campus-api actief is.");
                     }

@@ -123,6 +123,9 @@ public class ReservationServiceImplementation implements ReservationService {
         }
     }
 
+
+    // Twee reservaties overlappen wanneer de nieuwe start vóór het bestaande einde ligt en het nieuwe einde ná de bestaande start ligt.
+    // Reservaties kunnen elkaar direct volgen zonder overlap (bv. de ene eindigt om 12:00, en de volgende start om 12:00).
     private boolean periodsOverlap(LocalDateTime newStart, LocalDateTime newEnd, LocalDateTime existingStart, LocalDateTime existingEnd) {
         return newStart.isBefore(existingEnd) && newEnd.isAfter(existingStart);
     }
@@ -131,6 +134,7 @@ public class ReservationServiceImplementation implements ReservationService {
         List<Reservation> reservations = reservationRepository.getReservationsByRoom(room);
 
         for (Reservation existingReservation : reservations) {
+            // De reservatie die wordt aangepast wordt genegeerd, zodat ze niet als een conflict met zichzelf wordt beschouwd.
             if (existingReservation.getId() == currentReservationId) {
                 continue;
             }
